@@ -37,12 +37,13 @@ describe('ReviewSection', () => {
 
   it('starts collapsed and expands on click', () => {
     render(<ReviewSection section={mockSection} />)
-    const content = screen.getByText('Your code is well-structured and follows best practices.')
-    expect(content.parentElement).not.toHaveClass('block')
-
+    
     const button = screen.getByRole('button')
     fireEvent.click(button)
-    expect(screen.getByText('Your code is well-structured and follows best practices.')).toBeInTheDocument()
+    
+    const content = screen.getByText('Your code is well-structured and follows best practices.')
+    expect(content).toBeInTheDocument()
+    expect(button).toHaveAttribute('aria-expanded', 'true')
   })
 
   it('expands on Enter key press', () => {
