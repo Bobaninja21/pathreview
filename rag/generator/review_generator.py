@@ -1,12 +1,12 @@
 """LLM-based review generation."""
 
 from dataclasses import dataclass
-from typing import Optional
+
 import openai
 import structlog
 
+from .output_parser import FeedbackSection, parse_review_output
 from .prompt_templates import get_template
-from .output_parser import parse_review_output, FeedbackSection
 
 logger = structlog.get_logger()
 

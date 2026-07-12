@@ -1,7 +1,6 @@
 """ChromaDB-backed vector store for semantic retrieval."""
 
 import chromadb
-from chromadb.config import Settings
 import structlog
 
 logger = structlog.get_logger()
@@ -97,7 +96,7 @@ class VectorStore:
                 results["documents"][0],
                 results["metadatas"][0],
                 results["distances"][0],
-                results["ids"][0]
+                results["ids"][0], strict=False
             ):
                 # ChromaDB distances are euclidean by default; convert to similarity score
                 similarity = 1 / (1 + distance)

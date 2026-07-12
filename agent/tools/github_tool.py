@@ -2,6 +2,7 @@
 
 import httpx
 import structlog
+
 from .base import BaseTool, ToolResult
 
 logger = structlog.get_logger()

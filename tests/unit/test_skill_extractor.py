@@ -2,7 +2,7 @@
 
 import pytest
 
-from ingestion.parsers.skill_extractor import SkillExtractor, SkillDetection
+from ingestion.parsers.skill_extractor import SkillDetection, SkillExtractor
 
 
 @pytest.mark.unit
@@ -135,7 +135,7 @@ class TestSkillExtractor:
         """
         result = extractor.extract_skills(text)
 
-        skill_names = [s.name for s in skill_names]
+        skill_names = [s.name for s in result]
         # Should detect PostgreSQL
         assert any("postgres" in s.lower() or "sql" in s.lower() for s in skill_names)
 

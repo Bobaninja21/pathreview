@@ -1,10 +1,11 @@
 """Evaluation suite for RAG system."""
 
 from dataclasses import dataclass
+
 import structlog
 
-from .relevance_scorer import RelevanceScorer
 from .faithfulness_checker import FaithfulnessChecker
+from .relevance_scorer import RelevanceScorer
 
 logger = structlog.get_logger()
 

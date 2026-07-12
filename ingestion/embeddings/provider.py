@@ -75,7 +75,7 @@ class OpenAIEmbeddingProvider(EmbeddingProvider):
             from openai import OpenAI
             self.client = OpenAI()
         except ImportError:
-            raise ImportError("openai package is required for OpenAIEmbeddingProvider")
+            raise ImportError("openai package is required for OpenAIEmbeddingProvider") from None
 
     def embed(self, texts: list[str]) -> list[list[float]]:
         """

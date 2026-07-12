@@ -1,7 +1,7 @@
 """Tests for keyword_search.py"""
 
+
 import pytest
-from unittest.mock import Mock, patch
 
 from rag.retriever.keyword_search import KeywordSearcher
 

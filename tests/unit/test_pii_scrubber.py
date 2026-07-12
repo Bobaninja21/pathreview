@@ -257,7 +257,7 @@ class TestPIIScrubber:
     def test_detect_no_false_positives(self, scrubber):
         """Test that detect doesn't flag legitimate text as PII."""
         text = "The project uses version 1.2.3. It's available at https://example.com"
-        detected = scrubber.detect(text)
+        scrubber.detect(text)
 
         # Should be minimal or no detections
         # (version number shouldn't be flagged as SSN)

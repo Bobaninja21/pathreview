@@ -1,9 +1,14 @@
 """Tests for output_parser.py"""
 
-import pytest
 import json
 
-from rag.generator.output_parser import parse_review_output, FeedbackSection, _parse_plaintext_output
+import pytest
+
+from rag.generator.output_parser import (
+    FeedbackSection,
+    _parse_plaintext_output,
+    parse_review_output,
+)
 
 
 @pytest.mark.unit

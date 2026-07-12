@@ -1,7 +1,8 @@
 """Retry logic with exponential backoff."""
 
-import time
 import functools
+import time
+
 import structlog
 
 logger = structlog.get_logger()

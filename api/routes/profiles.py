@@ -1,18 +1,18 @@
-from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File, Form
-from uuid import UUID
-import structlog
 import mimetypes
+from uuid import UUID
 
-from api.schemas.profile import ProfileCreate, ProfileResponse, ProfileUpdate
+import structlog
+from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile, status
+
 from api.middleware.auth import get_current_user
-from core.models.user import User
-from core.models.profile import Profile
+from api.schemas.profile import ProfileCreate, ProfileResponse, ProfileUpdate
 from core.database import get_db
+from core.models.user import User
 from core.services.profile_service import (
     create_profile,
+    delete_profile,
     get_profile,
     update_profile,
-    delete_profile,
 )
 
 log = structlog.get_logger()
@@ -68,7 +68,7 @@ async def create_profile_endpoint(
                     raise HTTPException(
                         status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
                         detail="Failed to parse PDF resume",
-                    )
+                    ) from exc
             else:
                 # Markdown or plain text
                 resume_text = content.decode("utf-8")
@@ -105,7 +105,7 @@ async def create_profile_endpoint(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to create profile",
-        )
+        ) from exc
 
 
 @router.get("/{profile_id}", response_model=ProfileResponse)
@@ -141,7 +141,7 @@ async def get_profile_endpoint(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to retrieve profile",
-        )
+        ) from exc
 
 
 @router.put("/{profile_id}", response_model=ProfileResponse)
@@ -190,7 +190,7 @@ async def update_profile_endpoint(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to update profile",
-        )
+        ) from exc
 
 
 @router.delete("/{profile_id}", status_code=status.HTTP_204_NO_CONTENT)
@@ -235,4 +235,4 @@ async def delete_profile_endpoint(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to delete profile",
-        )
+        ) from exc

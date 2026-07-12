@@ -1,9 +1,9 @@
 """Tests for review_service.py"""
 
-import pytest
-from uuid import uuid4
 from unittest.mock import AsyncMock, Mock, patch
-import asyncio
+from uuid import uuid4
+
+import pytest
 
 from core.services.review_service import (
     create_review,
@@ -55,17 +55,17 @@ class TestReviewService:
         mock_db_session.commit = AsyncMock()
         mock_db_session.refresh = AsyncMock()
 
-        with patch('core.services.review_service.Review') as MockReview:
-            mock_instance = MockReview.return_value
+        with patch('core.services.review_service.Review') as mock_review:
+            mock_instance = mock_review.return_value
             mock_instance.status = "pending"
             mock_instance.sections = None
             mock_instance.overall_score = None
 
-            result = await create_review(mock_db_session, profile_id, user_id)
+            await create_review(mock_db_session, profile_id, user_id)
 
             # Check that Review was instantiated
-            MockReview.assert_called()
-            call_kwargs = MockReview.call_args[1]
+            mock_review.assert_called()
+            call_kwargs = mock_review.call_args[1]
             assert call_kwargs['status'] == "pending"
 
     @pytest.mark.asyncio
@@ -91,7 +91,7 @@ class TestReviewService:
     async def test_get_review_returns_none_for_wrong_user(self, mock_db_session):
         """Test get_review returns None when user_id doesn't match."""
         review_id = uuid4()
-        user_id = uuid4()
+        uuid4()
         wrong_user_id = uuid4()
 
         # Setup mock to return None
@@ -244,11 +244,11 @@ class TestReviewService:
         profile_id = uuid4()
         user_id = uuid4()
 
-        with patch('core.services.review_service.Review') as MockReview:
-            MockReview.return_value = Mock()
+        with patch('core.services.review_service.Review') as mock_review:
+            mock_review.return_value = Mock()
             await create_review(mock_db_session, profile_id, user_id)
 
-            call_kwargs = MockReview.call_args[1]
+            call_kwargs = mock_review.call_args[1]
             assert 'profile_id' in call_kwargs
             assert 'status' in call_kwargs
 
@@ -302,11 +302,11 @@ class TestReviewService:
         profile_id = uuid4()
         user_id = uuid4()
 
-        with patch('core.services.review_service.Review') as MockReview:
-            MockReview.return_value = Mock()
+        with patch('core.services.review_service.Review') as mock_review:
+            mock_review.return_value = Mock()
             await create_review(mock_db_session, profile_id, user_id)
 
-            call_kwargs = MockReview.call_args[1]
+            call_kwargs = mock_review.call_args[1]
             assert call_kwargs['sections'] is None
             assert call_kwargs['overall_score'] is None
 

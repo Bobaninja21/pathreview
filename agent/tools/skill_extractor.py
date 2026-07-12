@@ -1,7 +1,9 @@
 """Skill extraction tool."""
 
 import re
+
 import structlog
+
 from .base import BaseTool, ToolResult
 
 logger = structlog.get_logger()
@@ -44,7 +46,6 @@ class SkillExtractor(BaseTool):
             "Git": r"\bgit\b",
             "Docker": r"\bdocker\b",
             "Kubernetes": r"\bkubernetes|k8s\b",
-            "Git": r"\bgit\b",
             "GraphQL": r"\bgraphql\b",
             "REST": r"\brest|restful\b",
             "AWS": r"\baws\b",

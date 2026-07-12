@@ -213,7 +213,7 @@ class TestFaithfulnessChecker:
         claim = "The project is well documented"
         context = "The project is poorly documented"  # Opposite meaning but same stop words
 
-        supported = checker._is_supported(claim, context)
+        checker._is_supported(claim, context)
 
         # Despite word overlap, should look for meaningful overlap (not stop words)
         # This depends on implementation

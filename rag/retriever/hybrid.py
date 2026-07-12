@@ -1,8 +1,9 @@
 """Hybrid retriever combining vector and keyword search."""
 
 import structlog
-from .vector_store import VectorStore
+
 from .keyword_search import KeywordSearcher
+from .vector_store import VectorStore
 
 logger = structlog.get_logger()
 
@@ -47,7 +48,7 @@ class HybridRetriever:
         )
 
         # Keyword search - need to fetch all chunks first
-        all_chunks = self._get_all_chunks(collection_name)
+        self._get_all_chunks(collection_name)
         keyword_results = self.keyword_searcher.search(query, top_k=max_chunks * 2)
 
         # Create id-to-chunk mapping for both approaches
@@ -67,13 +68,21 @@ class HybridRetriever:
             keyword_score = 0.0
 
             if chunk_id in vector_map:
-                vector_score = (vector_map[chunk_id]["score"] / vector_scores_max) if vector_scores_max > 0 else 0
+                vector_score = (
+                    vector_map[chunk_id]["score"] / vector_scores_max
+                    if vector_scores_max > 0
+                    else 0
+                )
                 base_chunk = vector_map[chunk_id]
             else:
                 base_chunk = keyword_map[chunk_id]
 
             if chunk_id in keyword_map:
-                keyword_score = (keyword_map[chunk_id].get("bm25_score", 0) / keyword_scores_max) if keyword_scores_max > 0 else 0
+                keyword_score = (
+                    keyword_map[chunk_id].get("bm25_score", 0) / keyword_scores_max
+                    if keyword_scores_max > 0
+                    else 0
+                )
 
             blended_score = (
                 self.vector_weight * vector_score +
@@ -119,7 +128,7 @@ class HybridRetriever:
         for doc_id, text, metadata in zip(
             all_docs["ids"],
             all_docs["documents"],
-            all_docs["metadatas"]
+            all_docs["metadatas"], strict=False
         ):
             chunks.append({
                 "id": doc_id,

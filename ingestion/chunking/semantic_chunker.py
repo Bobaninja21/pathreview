@@ -45,7 +45,7 @@ class SemanticChunker(BaseChunker):
         overlap_tokens = 0
         char_start = 0
 
-        for i, sentence in enumerate(sentences):
+        for _i, sentence in enumerate(sentences):
             sentence_tokens = len(self.encoder.encode(sentence))
 
             # If adding this sentence would exceed our target, save current chunk

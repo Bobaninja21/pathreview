@@ -1,9 +1,9 @@
 """Contract tests for LLM providers"""
 
-import pytest
 import numpy as np
+import pytest
 
-from ingestion.embeddings.provider import MockEmbeddingProvider, EmbeddingProvider
+from ingestion.embeddings.provider import EmbeddingProvider, MockEmbeddingProvider
 
 
 @pytest.mark.unit

@@ -1,12 +1,12 @@
 """Plan-execute orchestrator for agent tools."""
 
 import time
-import structlog
-from typing import Optional
 
-from .memory.session_store import SessionStore
-from .memory.context_manager import ContextManager
+import structlog
+
 from .error_handling import retry_with_backoff
+from .memory.context_manager import ContextManager
+from .memory.session_store import SessionStore
 
 logger = structlog.get_logger()
 
@@ -14,7 +14,7 @@ logger = structlog.get_logger()
 class Orchestrator:
     """Orchestrate tool execution with planning and memoization."""
 
-    def __init__(self, tools: dict, session_store: Optional[SessionStore] = None,
+    def __init__(self, tools: dict, session_store: SessionStore | None = None,
                  tool_timeout: float = 30.0):
         """Initialize orchestrator.
 
@@ -172,7 +172,7 @@ class Orchestrator:
             logger.error("tool_execution_error", tool=tool_name, error=str(e))
             raise
 
-    def _execute_with_timeout(self, tool, tool_input: dict, timeout: Optional[float] = None):
+    def _execute_with_timeout(self, tool, tool_input: dict, timeout: float | None = None):
         """Execute tool with timeout.
 
         Args:

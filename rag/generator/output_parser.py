@@ -1,8 +1,9 @@
 """Parse LLM output into structured feedback."""
 
-from dataclasses import dataclass
 import json
 import re
+from dataclasses import dataclass
+
 import structlog
 
 logger = structlog.get_logger()
@@ -26,7 +27,6 @@ def parse_review_output(raw: str) -> list[FeedbackSection]:
     Returns:
         List of FeedbackSection objects
     """
-    sections = []
 
     # Try JSON in code fence first
     json_match = re.search(r"```(?:json)?\s*\n(.*?)\n```", raw, re.DOTALL)

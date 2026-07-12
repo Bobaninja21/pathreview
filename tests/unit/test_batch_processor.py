@@ -1,7 +1,8 @@
 """Tests for batch_processor.py"""
 
+from unittest.mock import Mock, patch
+
 import pytest
-from unittest.mock import Mock, MagicMock, patch
 
 from ingestion.chunking.base import Chunk
 from ingestion.embeddings.batch_processor import BatchEmbeddingProcessor
@@ -105,7 +106,7 @@ class TestBatchEmbeddingProcessor:
 
         processor._store_embedding = Mock(side_effect=["id1", "id2"])
 
-        result = processor.process(chunks)
+        processor.process(chunks)
 
         # Check that embed was called with the texts
         mock_embedding_provider.embed.assert_called()

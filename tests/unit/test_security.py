@@ -1,14 +1,14 @@
 """Tests for security.py"""
 
-import pytest
 from datetime import timedelta
-from unittest.mock import patch
+
+import pytest
 
 from core.security import (
-    hash_password,
-    verify_password,
     create_access_token,
     decode_access_token,
+    hash_password,
+    verify_password,
 )
 
 

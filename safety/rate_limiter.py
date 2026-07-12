@@ -1,7 +1,8 @@
 """Rate limiting with rolling window."""
 
-import redis
 import time
+
+import redis
 import structlog
 
 logger = structlog.get_logger()

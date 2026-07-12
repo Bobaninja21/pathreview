@@ -1,7 +1,7 @@
 """BM25-based keyword search retriever."""
 
-from rank_bm25 import BM25Okapi
 import structlog
+from rank_bm25 import BM25Okapi
 
 logger = structlog.get_logger()
 

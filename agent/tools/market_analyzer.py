@@ -1,8 +1,10 @@
 """Job market comparison tool."""
 
-import redis
 import json
+
+import redis
 import structlog
+
 from .base import BaseTool, ToolResult
 
 logger = structlog.get_logger()
@@ -91,7 +93,7 @@ class MarketAnalyzer(BaseTool):
         """
         # Flatten detected skills
         all_detected = set()
-        for category, skills_list in detected_skills.items():
+        for _category, skills_list in detected_skills.items():
             all_detected.update(skills_list)
 
         # Find in-demand skills the user has

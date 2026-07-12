@@ -2,6 +2,7 @@
 
 import hashlib
 import json
+
 import structlog
 
 logger = structlog.get_logger()

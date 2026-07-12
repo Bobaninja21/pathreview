@@ -1,8 +1,8 @@
 """Tests for rate_limiter.py"""
 
+from unittest.mock import Mock, patch
+
 import pytest
-from unittest.mock import Mock, MagicMock, patch
-import time
 
 from safety.rate_limiter import RateLimiter
 
