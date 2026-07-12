@@ -68,7 +68,7 @@ async def create_profile_endpoint(
                     raise HTTPException(
                         status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
                         detail="Failed to parse PDF resume",
-                    )
+                    ) from exc
             else:
                 # Markdown or plain text
                 resume_text = content.decode("utf-8")
@@ -105,7 +105,7 @@ async def create_profile_endpoint(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to create profile",
-        )
+        ) from exc
 
 
 @router.get("/{profile_id}", response_model=ProfileResponse)
@@ -141,7 +141,7 @@ async def get_profile_endpoint(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to retrieve profile",
-        )
+        ) from exc
 
 
 @router.put("/{profile_id}", response_model=ProfileResponse)
@@ -190,7 +190,7 @@ async def update_profile_endpoint(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to update profile",
-        )
+        ) from exc
 
 
 @router.delete("/{profile_id}", status_code=status.HTTP_204_NO_CONTENT)
@@ -235,4 +235,4 @@ async def delete_profile_endpoint(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to delete profile",
-        )
+        ) from exc
