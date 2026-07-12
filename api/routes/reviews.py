@@ -59,7 +59,7 @@ async def create_review_endpoint(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to create review",
-        )
+        ) from exc
 
 
 @router.get("/{review_id}", response_model=ReviewResponse)
@@ -95,7 +95,7 @@ async def get_review_endpoint(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to retrieve review",
-        )
+        ) from exc
 
 
 @router.get("", response_model=ReviewListResponse)
@@ -133,7 +133,7 @@ async def list_reviews_endpoint(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to list reviews",
-        )
+        ) from exc
 
 
 @router.get("/{review_id}/status")
@@ -173,4 +173,4 @@ async def get_review_status(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to retrieve review status",
-        )
+        ) from exc
