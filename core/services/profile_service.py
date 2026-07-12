@@ -1,6 +1,7 @@
 from uuid import UUID
 import structlog
 from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.models.profile import Profile
 from core.models.review import Review
@@ -11,11 +12,11 @@ log = structlog.get_logger()
 
 
 async def create_profile(
-    db,
+    db: AsyncSession,
     user_id: UUID,
     data: ProfileCreate,
-    resume_filename: str = None,
-    resume_text: str = None,
+    resume_filename: str | None = None,
+    resume_text: str | None = None,
 ) -> Profile:
     """Create a new profile for a user.
 
@@ -47,7 +48,7 @@ async def create_profile(
 
 
 async def get_profile(
-    db,
+    db: AsyncSession,
     profile_id: UUID,
     user_id: UUID,
 ) -> Profile | None:
@@ -69,7 +70,7 @@ async def get_profile(
 
 
 async def update_profile(
-    db,
+    db: AsyncSession,
     profile_id: UUID,
     user_id: UUID,
     data: ProfileUpdate,
@@ -101,7 +102,7 @@ async def update_profile(
 
 
 async def delete_profile(
-    db,
+    db: AsyncSession,
     profile_id: UUID,
     user_id: UUID,
 ) -> bool:

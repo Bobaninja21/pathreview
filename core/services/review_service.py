@@ -3,6 +3,7 @@ import structlog
 import json
 from datetime import datetime
 from sqlalchemy import select, and_
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.models.review import Review
 from core.models.profile import Profile
@@ -13,7 +14,7 @@ log = structlog.get_logger()
 
 
 async def create_review(
-    db,
+    db: AsyncSession,
     profile_id: UUID,
     user_id: UUID,
 ) -> Review:
@@ -40,7 +41,7 @@ async def create_review(
 
 
 async def get_review(
-    db,
+    db: AsyncSession,
     review_id: UUID,
     user_id: UUID,
 ) -> Review | None:
@@ -62,7 +63,7 @@ async def get_review(
 
 
 async def list_reviews(
-    db,
+    db: AsyncSession,
     user_id: UUID,
     page: int = 1,
     page_size: int = 20,
@@ -101,7 +102,7 @@ async def list_reviews(
 
 
 async def process_review(
-    db,
+    db: AsyncSession,
     review_id: UUID,
     profile_id: UUID,
 ) -> None:
@@ -220,7 +221,7 @@ async def process_review(
             log.error("review_status_update_failed", review_id=str(review_id), error=str(e))
 
 
-async def _run_ingestion_pipeline(db, profile: Profile) -> list[dict]:
+async def _run_ingestion_pipeline(db: AsyncSession, profile: Profile) -> list[dict]:
     """Run ingestion pipeline to extract data from profile sources.
 
     Ingests from GitHub, portfolio URL, and resume if available. Each
@@ -233,7 +234,7 @@ async def _run_ingestion_pipeline(db, profile: Profile) -> list[dict]:
     Returns:
         A list of dicts, each representing one ingested source.
     """
-    sources = []
+    sources: list[dict] = []
 
     # Ingest from GitHub if available
     if profile.github_username:

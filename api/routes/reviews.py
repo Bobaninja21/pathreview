@@ -25,7 +25,7 @@ async def create_review_endpoint(
     background_tasks: BackgroundTasks,
     current_user: User = Depends(get_current_user),
     db=Depends(get_db),
-):
+) -> ReviewResponse:
     """
     Create a new review for a profile.
     Triggers ingestion pipeline and agent orchestration asynchronously.
@@ -59,7 +59,7 @@ async def create_review_endpoint(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to create review",
-        ) from exc
+        )
 
 
 @router.get("/{review_id}", response_model=ReviewResponse)
@@ -67,7 +67,7 @@ async def get_review_endpoint(
     review_id: UUID,
     current_user: User = Depends(get_current_user),
     db=Depends(get_db),
-):
+) -> ReviewResponse:
     """
     Get a review by ID.
     Returns 404 if not found or not owned by current user.
@@ -95,7 +95,7 @@ async def get_review_endpoint(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to retrieve review",
-        ) from exc
+        )
 
 
 @router.get("", response_model=ReviewListResponse)
@@ -104,7 +104,7 @@ async def list_reviews_endpoint(
     page_size: int = 20,
     current_user: User = Depends(get_current_user),
     db=Depends(get_db),
-):
+) -> ReviewListResponse:
     """
     List reviews for current user with pagination.
     """
@@ -133,7 +133,7 @@ async def list_reviews_endpoint(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to list reviews",
-        ) from exc
+        )
 
 
 @router.get("/{review_id}/status")
@@ -141,7 +141,7 @@ async def get_review_status(
     review_id: UUID,
     current_user: User = Depends(get_current_user),
     db=Depends(get_db),
-):
+) -> dict:
     """
     Get review status and progress.
     Returns {review_id, status, progress_pct}
@@ -173,4 +173,4 @@ async def get_review_status(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to retrieve review status",
-        ) from exc
+        )

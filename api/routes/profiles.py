@@ -27,7 +27,7 @@ async def create_profile_endpoint(
     resume_file: UploadFile = File(default=None),
     current_user: User = Depends(get_current_user),
     db=Depends(get_db),
-):
+) -> ProfileResponse:
     """
     Create a new profile with optional resume upload.
     Resume must be PDF or Markdown.
@@ -68,7 +68,7 @@ async def create_profile_endpoint(
                     raise HTTPException(
                         status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
                         detail="Failed to parse PDF resume",
-                    ) from exc
+                    )
             else:
                 # Markdown or plain text
                 resume_text = content.decode("utf-8")
@@ -105,7 +105,7 @@ async def create_profile_endpoint(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to create profile",
-        ) from exc
+        )
 
 
 @router.get("/{profile_id}", response_model=ProfileResponse)
@@ -113,7 +113,7 @@ async def get_profile_endpoint(
     profile_id: UUID,
     current_user: User = Depends(get_current_user),
     db=Depends(get_db),
-):
+) -> ProfileResponse:
     """
     Get a profile by ID.
     Returns 404 if not found or not owned by current user.
@@ -141,7 +141,7 @@ async def get_profile_endpoint(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to retrieve profile",
-        ) from exc
+        )
 
 
 @router.put("/{profile_id}", response_model=ProfileResponse)
@@ -150,7 +150,7 @@ async def update_profile_endpoint(
     data: ProfileUpdate,
     current_user: User = Depends(get_current_user),
     db=Depends(get_db),
-):
+) -> ProfileResponse:
     """
     Update a profile.
     Returns 404 if not found or not owned by current user.
@@ -190,7 +190,7 @@ async def update_profile_endpoint(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to update profile",
-        ) from exc
+        )
 
 
 @router.delete("/{profile_id}", status_code=status.HTTP_204_NO_CONTENT)
@@ -198,7 +198,7 @@ async def delete_profile_endpoint(
     profile_id: UUID,
     current_user: User = Depends(get_current_user),
     db=Depends(get_db),
-):
+) -> None:
     """
     Delete a profile and cascade delete reviews and ingested sources.
     Returns 404 if not found or not owned by current user.
@@ -235,4 +235,4 @@ async def delete_profile_endpoint(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to delete profile",
-        ) from exc
+        )
