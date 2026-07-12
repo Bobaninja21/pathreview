@@ -86,7 +86,8 @@ class TestPIIScrubber:
         text = "Address: 123 Main Street, Apt 4"
         scrubbed = scrubber.scrub(text)
 
-        assert "[REDACTED]" in scrubbed or "123" not in scrubbed
+        assert "[REDACTED]" in scrubbed
+        assert "123 Main Street" not in scrubbed
 
     def test_text_with_no_pii(self, scrubber):
         """Test text with no PII is returned unchanged."""
@@ -196,12 +197,20 @@ class TestPIIScrubber:
             "123 Main Street",
             "456 Oak Avenue",
             "789 Elm Road",
+            "321 Maple Boulevard",
+            "654 Pine Drive",
+            "987 Cedar Lane",
+            "147 Birch Court",
+            "258 Spruce Circle",
+            "369 Walnut Place",
+            "741 Hickory Way",
         ]
 
         for addr in addresses:
             text = f"Address: {addr}"
             scrubbed = scrubber.scrub(text)
-            # Should attempt to redact addresses
+            assert "[REDACTED]" in scrubbed, f"Address '{addr}' was not redacted"
+            assert addr not in scrubbed, f"Address '{addr}' still present after scrubbing"
 
     def test_empty_text(self, scrubber):
         """Test with empty text."""

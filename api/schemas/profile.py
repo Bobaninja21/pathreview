@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, computed_field
 from datetime import datetime
 from uuid import UUID
 from typing import Optional
@@ -21,5 +21,10 @@ class ProfileResponse(BaseModel):
     portfolio_url: Optional[str]
     created_at: datetime
     resume_filename: Optional[str]
+
+    @computed_field
+    @property
+    def profile_id(self) -> UUID:
+        return self.id
 
     model_config = {"from_attributes": True}
