@@ -103,9 +103,9 @@ The project has no automated check for known security vulnerabilities in its Pyt
 
 Each branch follows the naming convention from CONTRIBUTING.md: `<type>/<issue-number>-<short-description>`.
 
-Branch URLs (available after push):
-- `docs/118-troubleshooting-guide`: https://github.com/pietandrews/pathreview/tree/docs/118-troubleshooting-guide
-- `docs/119-service-layer-docstrings`: https://github.com/pietandrews/pathreview/tree/docs/119-service-layer-docstrings
-- `fix/124-precommit-partial-staging`: https://github.com/pietandrews/pathreview/tree/fix/124-precommit-partial-staging
-- `docs/121-onboarding-guide`: https://github.com/pietandrews/pathreview/tree/docs/121-onboarding-guide
-- `ci/128-dependency-audit`: https://github.com/pietandrews/pathreview/tree/ci/128-dependency-audit
+Branch URLs:
+- `docs/118-troubleshooting-guide`: https://github.com/Bobaninja21/pathreview/tree/docs/118-troubleshooting-guide
+- `docs/119-service-layer-docstrings`: https://github.com/Bobaninja21/pathreview/tree/docs/119-service-layer-docstrings
+- `fix/124-precommit-partial-staging`: https://github.com/Bobaninja21/pathreview/tree/fix/124-precommit-partial-staging
+- `docs/121-onboarding-guide`: https://github.com/Bobaninja21/pathreview/tree/docs/121-onboarding-guide
+- `ci/128-dependency-audit`: https://github.com/Bobaninja21/pathreview/tree/ci/128-dependency-audit
