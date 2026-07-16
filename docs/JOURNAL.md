@@ -160,9 +160,9 @@ The project has no automated check for known security vulnerabilities in its Pyt
 Each branch follows the naming convention from CONTRIBUTING.md: `<type>/<issue-number>-<short-description>`.
 
 Branch URLs:
-- `main` (#155): https://github.com/ascherj/pathreview/issues/155
-- `main` (#154): https://github.com/ascherj/pathreview/issues/154
-- `main` (#153): https://github.com/ascherj/pathreview/issues/153
+- (#155): https://github.com/ascherj/pathreview/issues/155
+- (#154): https://github.com/ascherj/pathreview/issues/154
+- (#153): https://github.com/ascherj/pathreview/issues/153
 - `docs/118-troubleshooting-guide`: https://github.com/Bobaninja21/pathreview/tree/docs/118-troubleshooting-guide
 - `docs/119-service-layer-docstrings`: https://github.com/Bobaninja21/pathreview/tree/docs/119-service-layer-docstrings
 - `fix/124-precommit-partial-staging`: https://github.com/Bobaninja21/pathreview/tree/fix/124-precommit-partial-staging
