@@ -160,7 +160,9 @@ The project has no automated check for known security vulnerabilities in its Pyt
 Each branch follows the naming convention from CONTRIBUTING.md: `<type>/<issue-number>-<short-description>`.
 
 Branch URLs:
-- `main` (Tier 1 — #155, #154, #153): https://github.com/Bobaninja21/pathreview
+- `main` (#155): https://github.com/Bobaninja21/pathreview
+- `main` (#154): https://github.com/Bobaninja21/pathreview
+- `main` (#153): https://github.com/Bobaninja21/pathreview
 - `docs/118-troubleshooting-guide`: https://github.com/Bobaninja21/pathreview/tree/docs/118-troubleshooting-guide
 - `docs/119-service-layer-docstrings`: https://github.com/Bobaninja21/pathreview/tree/docs/119-service-layer-docstrings
 - `fix/124-precommit-partial-staging`: https://github.com/Bobaninja21/pathreview/tree/fix/124-precommit-partial-staging
