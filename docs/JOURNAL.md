@@ -1,5 +1,58 @@
 # Contribution Journal
 
+## Tier 1 — Starter Issues
+
+### Issue #155 — Health check references `settings.redis_host`, which does not exist on Settings
+
+**Link:** https://github.com/ascherj/pathreview/issues/155
+
+**Problem summary:**
+The health check endpoint at `api/routes/health.py` tries to connect to Redis using `settings.redis_host`, but the Settings object only exposes `redis_url` (e.g., `redis://localhost:6379/0`). This attribute error crashes the Redis health probe on every invocation, causing a 503 even when Redis is actually running. A successful fix replaces the manual host/port construction with `redis.from_url(settings.redis_url)`.
+
+**"Is this right for me?" checklist reasoning:**
+- Single file change (`api/routes/health.py`)
+- No behavioral changes beyond fixing the Redis connection logic
+- Requires understanding the config model and redis-py API
+- One-line fix with minimal risk
+
+**Branch:** `main` (merged alongside #154 and #153)
+
+---
+
+### Issue #154 — Health check DB probe passes a raw SQL string, which fails under SQLAlchemy 2.x
+
+**Link:** https://github.com/ascherj/pathreview/issues/154
+
+**Problem summary:**
+The PostgreSQL health probe calls `await db.execute("SELECT 1")` with a raw SQL string. SQLAlchemy 2.x raises a `CompileError` when passed a plain string — it requires `text()`-wrapped expressions. This causes the health check to report Postgres as unhealthy even when the database is available. A successful fix wraps the query in `sqlalchemy.text("SELECT 1")`.
+
+**"Is this right for me?" checklist reasoning:**
+- Single file change (`api/routes/health.py`)
+- Standard SQLAlchemy 2.x migration pattern
+- Adds `from sqlalchemy import text` import
+- Minimal risk, clear test scenario
+
+**Branch:** `main` (merged alongside #155 and #153)
+
+---
+
+### Issue #153 — Faithfulness checker crashes when a context chunk has `text: None`
+
+**Link:** https://github.com/ascherj/pathreview/issues/153
+
+**Problem summary:**
+The `FaithfulnessChecker.check()` method joins context chunk text with `chunk.get("text", "")`. When a chunk explicitly has `"text": None`, `dict.get()` returns `None` (not the default), causing `" ".join(...)` to raise a `TypeError` on the `None` value. A successful fix uses `chunk.get("text") or ""` so that both missing keys and explicit `None` values resolve to an empty string.
+
+**"Is this right for me?" checklist reasoning:**
+- Single file change (`rag/evaluator/faithfulness_checker.py`)
+- One-character change (`or` instead of `, ""`)
+- Existing test (`test_none_context_chunk_text`) verifies the fix
+- No behavioral change for well-formed data
+
+**Branch:** `main` (merged alongside #155 and #154)
+
+---
+
 ## Tier 2 — Intermediate Issues
 
 ### Issue #118 — Add a troubleshooting guide for the five most common setup failures
@@ -93,6 +146,9 @@ The project has no automated check for known security vulnerabilities in its Pyt
 
 | Issue | Tier | Branch | Status |
 |-------|------|--------|--------|
+| #155 | 1 | `main` | Implemented |
+| #154 | 1 | `main` | Implemented |
+| #153 | 1 | `main` | Implemented |
 | #118 | 2 | `docs/118-troubleshooting-guide` | Implemented |
 | #119 | 2 | `docs/119-service-layer-docstrings` | Implemented |
 | #124 | 2 | `fix/124-precommit-partial-staging` | Implemented |
@@ -104,6 +160,7 @@ The project has no automated check for known security vulnerabilities in its Pyt
 Each branch follows the naming convention from CONTRIBUTING.md: `<type>/<issue-number>-<short-description>`.
 
 Branch URLs:
+- `main` (Tier 1 — #155, #154, #153): https://github.com/Bobaninja21/pathreview
 - `docs/118-troubleshooting-guide`: https://github.com/Bobaninja21/pathreview/tree/docs/118-troubleshooting-guide
 - `docs/119-service-layer-docstrings`: https://github.com/Bobaninja21/pathreview/tree/docs/119-service-layer-docstrings
 - `fix/124-precommit-partial-staging`: https://github.com/Bobaninja21/pathreview/tree/fix/124-precommit-partial-staging
