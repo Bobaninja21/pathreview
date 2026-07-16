@@ -144,25 +144,25 @@ The project has no automated check for known security vulnerabilities in its Pyt
 
 ## Cohort Issue Ledger
 
-| Issue | Tier | Branch | Status |
-|-------|------|--------|--------|
-| #155 | 1 | `main` | Implemented |
-| #154 | 1 | `main` | Implemented |
-| #153 | 1 | `main` | Implemented |
-| #118 | 2 | `docs/118-troubleshooting-guide` | Implemented |
-| #119 | 2 | `docs/119-service-layer-docstrings` | Implemented |
-| #124 | 2 | `fix/124-precommit-partial-staging` | Implemented |
-| #121 | 3 | `docs/121-onboarding-guide` | Implemented |
-| #128 | 3 | `ci/128-dependency-audit` | Implemented |
+| Issue | Link | Tier | Branch | Status |
+|-------|------|------|--------|--------|
+| #155 | [ascherj/pathreview#155](https://github.com/ascherj/pathreview/issues/155) | 1 | `main` | Implemented |
+| #154 | [ascherj/pathreview#154](https://github.com/ascherj/pathreview/issues/154) | 1 | `main` | Implemented |
+| #153 | [ascherj/pathreview#153](https://github.com/ascherj/pathreview/issues/153) | 1 | `main` | Implemented |
+| #118 | [jamjamgobambam/pathreview#118](https://github.com/jamjamgobambam/pathreview/issues/118) | 2 | `docs/118-troubleshooting-guide` | Implemented |
+| #119 | [jamjamgobambam/pathreview#119](https://github.com/jamjamgobambam/pathreview/issues/119) | 2 | `docs/119-service-layer-docstrings` | Implemented |
+| #124 | [jamjamgobambam/pathreview#124](https://github.com/jamjamgobambam/pathreview/issues/124) | 2 | `fix/124-precommit-partial-staging` | Implemented |
+| #121 | [jamjamgobambam/pathreview#121](https://github.com/jamjamgobambam/pathreview/issues/121) | 3 | `docs/121-onboarding-guide` | Implemented |
+| #128 | [jamjamgobambam/pathreview#128](https://github.com/jamjamgobambam/pathreview/issues/128) | 3 | `ci/128-dependency-audit` | Implemented |
 
 ## Branches
 
 Each branch follows the naming convention from CONTRIBUTING.md: `<type>/<issue-number>-<short-description>`.
 
 Branch URLs:
-- `main` (#155): https://github.com/Bobaninja21/pathreview
-- `main` (#154): https://github.com/Bobaninja21/pathreview
-- `main` (#153): https://github.com/Bobaninja21/pathreview
+- `main` (#155): https://github.com/ascherj/pathreview/issues/155
+- `main` (#154): https://github.com/ascherj/pathreview/issues/154
+- `main` (#153): https://github.com/ascherj/pathreview/issues/153
 - `docs/118-troubleshooting-guide`: https://github.com/Bobaninja21/pathreview/tree/docs/118-troubleshooting-guide
 - `docs/119-service-layer-docstrings`: https://github.com/Bobaninja21/pathreview/tree/docs/119-service-layer-docstrings
 - `fix/124-precommit-partial-staging`: https://github.com/Bobaninja21/pathreview/tree/fix/124-precommit-partial-staging
