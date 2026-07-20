@@ -142,6 +142,22 @@ The project has no automated check for known security vulnerabilities in its Pyt
 
 ---
 
+## Week 8 — Reproduction & solution planning
+
+**Reproduction commit link:** https://github.com/Bobaninja21/pathreview/commit/bef3918
+
+**Reproduction summary:**
+Inspected `api/routes/health.py` and found `settings.redis_host` referenced on line 45, but `core/config.py` only defines `redis_url` (line 12). A `GET /health` request would raise `AttributeError` and return 503. Documented steps in `docs/REPRODUCTION.md`.
+
+**PLAN.md link:** https://github.com/Bobaninja21/pathreview/blob/main/PLAN.md
+
+**Loom walkthrough:** *(skipped per instructions)*
+
+**Blockers or open questions:**
+None — fix is straightforward, both `redis.Redis()` and `redis.from_url()` return the same client class.
+
+---
+
 ## Cohort Issue Ledger
 
 | Issue | Link | Tier | Branch | Status |
@@ -160,9 +176,9 @@ The project has no automated check for known security vulnerabilities in its Pyt
 Each branch follows the naming convention from CONTRIBUTING.md: `<type>/<issue-number>-<short-description>`.
 
 Branch URLs:
-- (#155): https://github.com/ascherj/pathreview/issues/155
-- (#154): https://github.com/ascherj/pathreview/issues/154
-- (#153): https://github.com/ascherj/pathreview/issues/153
+- `main` (#155): https://github.com/ascherj/pathreview/issues/155
+- `main` (#154): https://github.com/ascherj/pathreview/issues/154
+- `main` (#153): https://github.com/ascherj/pathreview/issues/153
 - `docs/118-troubleshooting-guide`: https://github.com/Bobaninja21/pathreview/tree/docs/118-troubleshooting-guide
 - `docs/119-service-layer-docstrings`: https://github.com/Bobaninja21/pathreview/tree/docs/119-service-layer-docstrings
 - `fix/124-precommit-partial-staging`: https://github.com/Bobaninja21/pathreview/tree/fix/124-precommit-partial-staging
