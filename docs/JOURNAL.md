@@ -15,7 +15,7 @@ The health check endpoint at `api/routes/health.py` tries to connect to Redis us
 - Requires understanding the config model and redis-py API
 - One-line fix with minimal risk
 
-**Branch:** `main` (merged alongside #154 and #153)
+**Branch:** `fix/155-154-153-health-faithfulness`
 
 ---
 
@@ -32,7 +32,7 @@ The PostgreSQL health probe calls `await db.execute("SELECT 1")` with a raw SQL 
 - Adds `from sqlalchemy import text` import
 - Minimal risk, clear test scenario
 
-**Branch:** `main` (merged alongside #155 and #153)
+**Branch:** `fix/155-154-153-health-faithfulness`
 
 ---
 
@@ -49,7 +49,7 @@ The `FaithfulnessChecker.check()` method joins context chunk text with `chunk.ge
 - Existing test (`test_none_context_chunk_text`) verifies the fix
 - No behavioral change for well-formed data
 
-**Branch:** `main` (merged alongside #155 and #154)
+**Branch:** `fix/155-154-153-health-faithfulness`
 
 ---
 
@@ -177,7 +177,9 @@ None.
 
 ### Check-in 2 (end of week)
 
-**PR link:** https://github.com/Bobaninja21/pathreview/pull/new/fix/155-154-153-health-faithfulness
+**PR link:** https://github.com/ascherj/pathreview/pull/416
+
+**Branch:** `fix/155-154-153-health-faithfulness`
 
 **What you built:**
 Three targeted bug fixes: the health endpoint now connects to Redis via `redis.from_url(settings.redis_url)` instead of
@@ -193,9 +195,9 @@ Created `tests/unit/test_health.py` — 7 tests across 3 classes covering: Redis
 
 | Issue | Link | Tier | Branch | Status |
 |-------|------|------|--------|--------|
-| #155 | [ascherj/pathreview#155](https://github.com/ascherj/pathreview/issues/155) | 1 | `main` | Implemented |
-| #154 | [ascherj/pathreview#154](https://github.com/ascherj/pathreview/issues/154) | 1 | `main` | Implemented |
-| #153 | [ascherj/pathreview#153](https://github.com/ascherj/pathreview/issues/153) | 1 | `main` | Implemented |
+| #155 | [ascherj/pathreview#155](https://github.com/ascherj/pathreview/issues/155) | 1 | `fix/155-154-153-health-faithfulness` | Implemented |
+| #154 | [ascherj/pathreview#154](https://github.com/ascherj/pathreview/issues/154) | 1 | `fix/155-154-153-health-faithfulness` | Implemented |
+| #153 | [ascherj/pathreview#153](https://github.com/ascherj/pathreview/issues/153) | 1 | `fix/155-154-153-health-faithfulness` | Implemented |
 | #118 | [jamjamgobambam/pathreview#118](https://github.com/jamjamgobambam/pathreview/issues/118) | 2 | `docs/118-troubleshooting-guide` | Implemented |
 | #119 | [jamjamgobambam/pathreview#119](https://github.com/jamjamgobambam/pathreview/issues/119) | 2 | `docs/119-service-layer-docstrings` | Implemented |
 | #124 | [jamjamgobambam/pathreview#124](https://github.com/jamjamgobambam/pathreview/issues/124) | 2 | `fix/124-precommit-partial-staging` | Implemented |
@@ -207,9 +209,7 @@ Created `tests/unit/test_health.py` — 7 tests across 3 classes covering: Redis
 Each branch follows the naming convention from CONTRIBUTING.md: `<type>/<issue-number>-<short-description>`.
 
 Branch URLs:
-- `main` (#155): https://github.com/ascherj/pathreview/issues/155
-- `main` (#154): https://github.com/ascherj/pathreview/issues/154
-- `main` (#153): https://github.com/ascherj/pathreview/issues/153
+- `fix/155-154-153-health-faithfulness` (#155, #154, #153): https://github.com/ascherj/pathreview/pull/416
 - `docs/118-troubleshooting-guide`: https://github.com/Bobaninja21/pathreview/tree/docs/118-troubleshooting-guide
 - `docs/119-service-layer-docstrings`: https://github.com/Bobaninja21/pathreview/tree/docs/119-service-layer-docstrings
 - `fix/124-precommit-partial-staging`: https://github.com/Bobaninja21/pathreview/tree/fix/124-precommit-partial-staging
