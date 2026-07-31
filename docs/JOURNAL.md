@@ -158,7 +158,38 @@ None — fix is straightforward, both `redis.Redis()` and `redis.from_url()` ret
 
 ---
 
-## Cohort Issue Ledger
+## Week 9 — Solution building & PR submission
+
+### Check-in 1 (mid-week)
+
+**Current progress:**
+Implemented all 3 fixes from PLAN.md sub-tasks: replaced `redis.from_url(settings.redis_url)` (#155), wrapped SQL with `text()`
+(#154), and guarded against `None` chunk text in faithfulness checker (#153). All changes pushed to `main`.
+
+**Next steps:**
+Create a dedicated PR branch, add unit tests for the health endpoint changes, run `ruff check` and `pytest`, open the PR
+with a complete template.
+
+**Blockers:**
+None.
+
+---
+
+### Check-in 2 (end of week)
+
+**PR link:** https://github.com/Bobaninja21/pathreview/pull/new/fix/155-154-153-health-faithfulness
+
+**What you built:**
+Three targeted bug fixes: the health endpoint now connects to Redis via `redis.from_url(settings.redis_url)` instead of
+a non-existent `settings.redis_host`, wraps the DB probe query in `sqlalchemy.text()` for SQLAlchemy 2.x compatibility,
+and the faithfulness checker gracefully handles context chunks with explicit `text: None` values.
+
+**Tests added or updated:**
+Created `tests/unit/test_health.py` — 7 tests across 3 classes covering: Redis connection uses `from_url` (2 tests), DB probe uses `text()` wrapper (2 tests), and the `chunk.get("text") or ""` pattern handles None/missing/present keys (3 parametrized tests). Existing `test_none_context_chunk_text` and `test_missing_text_key_in_chunk` in `test_faithfulness_checker.py` also verify the #153 fix.
+
+**Self-review confirmation:** - [x] make check passes  - [x] make test-unit passes
+
+**Draft PR feedback received from:** none
 
 | Issue | Link | Tier | Branch | Status |
 |-------|------|------|--------|--------|
