@@ -270,14 +270,15 @@ class SkillExtractor:
         text_lower = text.lower()
 
         for display_name, (confidence, keywords) in self.DATABASES.items():
-            if any(keyword in text_lower for keyword in keywords):
-                if display_name not in skills_dict:
-                    skills_dict[display_name] = SkillDetection(
-                        name=display_name,
-                        category="Database",
-                        confidence=confidence,
-                        evidence=[f"Found '{keywords[0]}' reference in content"],
-                    )
+            if any(keyword in text_lower for keyword in keywords) and (
+                display_name not in skills_dict
+            ):
+                skills_dict[display_name] = SkillDetection(
+                    name=display_name,
+                    category="Database",
+                    confidence=confidence,
+                    evidence=[f"Found '{keywords[0]}' reference in content"],
+                )
 
     def _detect_tools(self, text: str, skills_dict: dict) -> None:
         """Detect tools and DevOps technologies."""
@@ -287,12 +288,18 @@ class SkillExtractor:
             found = False
 
             if display_name == "Docker":
-                if any(keyword in text_lower for keyword in keywords):
-                    found = True
-                elif re.search(r"^\s*from\s+[\w\-./:]+", text_lower, re.MULTILINE):
-                    found = True
-                elif re.search(r"^\s*version\s*:\s*['\"]?\d+\.\d+['\"]?", text_lower, re.MULTILINE) and \
-                    re.search(r"^\s*services\s*:\s*$", text_lower, re.MULTILINE):
+                has_keyword = any(
+                    keyword in text_lower for keyword in keywords
+                )
+                has_dockerfile = re.search(
+                    r"^\s*from\s+[\w\-./:]+", text_lower, re.MULTILINE
+                )
+                has_compose = re.search(
+                    r"^\s*version\s*:\s*['\"]?\d+\.\d+['\"]?",
+                    text_lower,
+                    re.MULTILINE,
+                ) and re.search(r"^\s*services\s*:\s*$", text_lower, re.MULTILINE)
+                if has_keyword or has_dockerfile or has_compose:
                     found = True
             else:
                 if any(keyword in text_lower for keyword in keywords):
