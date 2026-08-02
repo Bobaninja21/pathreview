@@ -215,3 +215,36 @@ Branch URLs:
 - `fix/124-precommit-partial-staging`: https://github.com/Bobaninja21/pathreview/tree/fix/124-precommit-partial-staging
 - `docs/121-onboarding-guide`: https://github.com/Bobaninja21/pathreview/tree/docs/121-onboarding-guide
 - `ci/128-dependency-audit`: https://github.com/Bobaninja21/pathreview/tree/ci/128-dependency-audit
+
+---
+
+## Week 10 — Iteration & reflection
+
+### Reviewer feedback
+
+**Feedback received:** [ ] Yes  [x] No — still awaiting review
+
+**Summary of feedback:**
+No reviewer or maintainer feedback has arrived on PR #416 ([https://github.com/ascherj/pathreview/pull/416](https://github.com/ascherj/pathreview/pull/416)) as of the end of Week 10. The PR is still open, shows "No reviews" in the sidebar, and contains only my own comments and commit activity — no requested changes, review comments, or code suggestions. I re-checked the conversation tab and the review status before writing this entry.
+
+**How you responded:**
+(No feedback received, so no response was needed. If a review arrives after submission, I will respond professionally and document it here.)
+
+---
+
+### Reflection
+
+**What was harder than you expected?**
+Getting the fork's CI to run cleanly turned out to be far harder than the three fixes themselves. Each code fix was a one-line change, but diagnosing why the CI pipeline stayed red took most of the effort. I discovered the failures were pre-existing on upstream `main` (black wants to reformat 49 files, mypy reports 39+ errors, and `ProfileForm.test.tsx` times out) — unrelated to my changes. I also spent significant time fixing two problems my own merge introduced: my conflict resolution in `ingestion/parsers/skill_extractor.py` created ruff violations (SIM102, SIM114, E501), and an earlier fork commit corrupted `frontend/package-lock.json`, breaking `npm ci` and the audit job. Cleaning those up meant rebuilding the PR branch from `upstream/main` into exactly three commits (fix, test, style) and force-pushing.
+
+**What did you learn about working in a large codebase?**
+Contributing to someone else's production code is very different from building my own project. I had to respect conventions I didn't set: branch names like `<type>/<issue-number>-<short-description>` (`fix/155-154-153-health-faithfulness`), Conventional Commits with issue references, and a detailed PR template requiring manual verification steps, not just test names. I also learned that a clean, reviewable diff matters more than speed — a PR with 29 noisy commits is harder for a maintainer to review than a focused one, which is why I force-pushed a clean 3-commit history. Finally, running the full toolchain locally (ruff, black, mypy, pytest in a Python 3.14 venv) was essential because I couldn't reproduce GitHub Actions behavior from the CI logs alone.
+
+**How did AI tools help — and where did they fall short?**
+AI was most useful for structuring and auditing my work against the grading rubric: drafting the JOURNAL check-ins, the PR description with manual verification steps, and the reflection entries, and checking each against the rubric's exact point criteria. It also helped me trace the ruff violations and reason about whether the `or ""` pattern handles `None` values correctly. Where it fell short: AI couldn't tell me whether the CI failures were caused by my changes or pre-existing — that required actually checking out upstream, running the tools, and comparing baselines. I had to verify claims myself (e.g., confirming the 28 unit-test failures exist identically on upstream `main`) rather than trust an AI-generated summary. AI is a strong editor, but the verification and judgment had to be mine.
+
+**What would you do differently if you started over?**
+I would create the dedicated feature branch first and keep `main` clean from the start, instead of applying the fixes to `main` and later rebuilding a separate PR branch. That roundabout flow caused the corrupted lockfile and the skill_extractor lint regressions and forced me to force-push. I'd also sync from `upstream/main` more frequently and run `ruff check .` and `black --check` immediately after every merge conflict resolution, rather than discovering the violations when CI turned red. Finally, I'd submit the PR earlier in the week to give reviewers more time to comment — though in this case no review arrived regardless.
+
+**What are you most proud of from this module?**
+I'm most proud of the full four-week contribution cycle being completed end-to-end: from triaging eight issues across three tiers and documenting why each was a good fit, to reproducing the bugs, planning the fixes, implementing all three Tier 1 fixes with 7 new unit tests, and submitting a polished PR with a complete template and manual verification steps. The PR cleanly demonstrates the fix commits with the test suite and is submitted to the upstream repo. Even though my code hasn't been reviewed yet, the record in this journal shows the entire lifecycle done properly.
