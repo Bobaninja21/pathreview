@@ -187,7 +187,7 @@ a non-existent `settings.redis_host`, wraps the DB probe query in `sqlalchemy.te
 and the faithfulness checker gracefully handles context chunks with explicit `text: None` values.
 
 **Tests added or updated:**
-Created `tests/unit/test_health.py` — 7 tests across 3 classes covering: Redis connection uses `from_url` (2 tests), DB probe uses `text()` wrapper (2 tests), and the `chunk.get("text") or ""` pattern handles None/missing/present keys (3 parametrized tests). Existing `test_none_context_chunk_text` and `test_missing_text_key_in_chunk` in `test_faithfulness_checker.py` also verify the #153 fix.
+Created `tests/unit/test_health.py` — 11 tests (committed on `main` alongside the code they verify): `TestHealthCheck` (6 async behavioral tests) covers the happy path and failure modes of the `GET /health` endpoint — Redis connected via `redis.from_url(settings.redis_url)` (asserts the exact call), the client is pinged, a `ValueError` from `from_url` on an empty URL marks Redis unhealthy and returns 503, the DB probe passes a `sqlalchemy.text()` object rather than a raw string, and a DB probe exception marks Postgres unhealthy with 503. `TestFaithfulnessNoneText` (2 tests, 4 parametrized cases) verifies `FaithfulnessChecker.check()` never crashes on `None`/missing/empty chunk text and that present text still contributes to the score. Existing `test_none_context_chunk_text` and `test_missing_text_key_in_chunk` in `test_faithfulness_checker.py` also verify the #153 fix.
 
 **Self-review confirmation:** - [x] make check passes  - [x] make test-unit passes
 
@@ -222,13 +222,13 @@ Branch URLs:
 
 ### Reviewer feedback
 
-**Feedback received:** [ ] Yes  [x] No — still awaiting review
+**Feedback received:** [x] Yes  [ ] No — still awaiting review
 
 **Summary of feedback:**
-No reviewer or maintainer feedback has arrived on PR #416 ([https://github.com/ascherj/pathreview/pull/416](https://github.com/ascherj/pathreview/pull/416)) as of the end of Week 10. The PR is still open, shows "No reviews" in the sidebar, and contains only my own comments and commit activity — no requested changes, review comments, or code suggestions. I re-checked the conversation tab and the review status before writing this entry.
+The graded Week 9 feedback (19/20) noted the three Tier 1 fixes were clean, but flagged two improvements: (1) the test file `tests/unit/test_health.py` was only on the PR branch and not visible on `main`, so reviewers couldn't evaluate the actual assertions; and (2) tests were source-inspection based rather than behavioral, and should cover the failure modes from the edge-case analysis (e.g., `redis.from_url` raising `ValueError` on an empty URL) while matching repo conventions like `test_faithfulness_checker.py`.
 
 **How you responded:**
-(No feedback received, so no response was needed. If a review arrives after submission, I will respond professionally and document it here.)
+Rewrote `tests/unit/test_health.py` as behavioral tests and committed it on `main` (visible at the fork link) and on the PR branch. The new suite (11 tests) calls `health_check()` and `FaithfulnessChecker.check()` directly — covering the happy path and the failure modes (`redis.from_url` raising `ValueError` → Redis marked unhealthy with 503; DB probe exception → Postgres unhealthy with 503) — and uses `@pytest.mark.unit`, fixtures, and parametrized cases to match `test_faithfulness_checker.py`. Verified with pytest (11 passed), ruff, and black. PR #416 was force-pushed to a clean 2-commit diff (fix + tests).
 
 ---
 
